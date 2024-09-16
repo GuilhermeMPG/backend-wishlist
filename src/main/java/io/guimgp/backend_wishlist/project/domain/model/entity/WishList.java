@@ -9,8 +9,9 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "wish_lists")
@@ -33,7 +34,7 @@ public class WishList {
     private String description;
 
     @Column(precision = 10, scale = 2)
-    private Double price = 0.00;
+    private BigDecimal price = BigDecimal.valueOf(0.00);
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status = OrderStatus.PENDING;
