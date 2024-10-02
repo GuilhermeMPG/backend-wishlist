@@ -1,10 +1,10 @@
 package io.guimgp.backend_wishlist.project.presentation.controller;
 
 
-import io.guimgp.backend_wishlist.project.domain.dto.LoginRequestDTO;
-import io.guimgp.backend_wishlist.project.domain.dto.LoginResponseDTO;
-import io.guimgp.backend_wishlist.project.domain.dto.RegisterRequestDTO;
-import io.guimgp.backend_wishlist.project.domain.dto.RegisterResponseDTO;
+import io.guimgp.backend_wishlist.project.domain.dto.auth.LoginRequestDTO;
+import io.guimgp.backend_wishlist.project.domain.dto.auth.LoginResponseDTO;
+import io.guimgp.backend_wishlist.project.domain.dto.auth.RegisterRequestDTO;
+import io.guimgp.backend_wishlist.project.domain.dto.auth.RegisterResponseDTO;
 import io.guimgp.backend_wishlist.project.presentation.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
