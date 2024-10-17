@@ -18,20 +18,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<GetUserResponseDTO> getUserById(@PathVariable("userId") String userId) {
+    @GetMapping
+    public ResponseEntity<GetUserResponseDTO> getUserById(@RequestParam("userId") String userId) {
         return userService.getUserById(userId);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Void> updateUserById(@PathVariable("userId") String userId,
+    @PutMapping
+    public ResponseEntity<Void> updateUserById(@RequestParam("userId") String userId,
                                                              @RequestBody PutUserRequestDTO body) {
         return userService.updateUserById(userId, body);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable("userId") String userId, HttpServletRequest request) {
-        return userService.deleteUserById(userId, request);
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUserById(@RequestParam("userId") String userId) {
+        return userService.deleteUserById(userId);
     }
 
 }

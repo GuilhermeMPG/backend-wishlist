@@ -55,10 +55,10 @@ public class User implements UserDetails {
     @NotNull(message = "User role is required")
     private UserRole role = UserRole.USER;
 
-    @OneToMany(mappedBy = "user")
-    private List<WishList> wishList = new ArrayList<>();
+    @OneToMany(mappedBy = "user",  cascade = CascadeType.ALL)
+    private List<Wish> wish = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",  cascade = CascadeType.ALL)
     private List<Debt> debts = new ArrayList<>();
 
     @CreationTimestamp

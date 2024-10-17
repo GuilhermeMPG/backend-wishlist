@@ -9,7 +9,6 @@ import io.guimgp.backend_wishlist.project.domain.model.repository.UserRepository
 import io.guimgp.backend_wishlist.project.infrastructure.exceptions.EntityNotFoundCustomException;
 import io.guimgp.backend_wishlist.project.infrastructure.security.SecurityFilter;
 import io.guimgp.backend_wishlist.project.infrastructure.service.TokenService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,6 @@ public class UserService {
 
     @Autowired
     SecurityFilter securityFilter;
-
 
 
     public ResponseEntity<GetUserResponseDTO> getUserById(String id) {
@@ -68,25 +66,12 @@ public class UserService {
 
     }
 
-    public ResponseEntity<Void> deleteUserById(String id, HttpServletRequest request) {
+    public ResponseEntity<Void> deleteUserById(String id) {
 
-        var userId = UUID.fromString(id);
-        var deleteId = userRepository.existsById(userId);
-        if (deleteId) {
-            var token = securityFilter.recoverToken(request);
-            var email = tokenService.validateToken(token);
+        User user = userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new EntityNotFoundCustomException(id));
+        userRepository.deleteById(UUID.fromString(id));
+        return ResponseEntity.status(HttpStatus.OK).build();
 
-            Optional<User> user = userRepository.findByEmail(email);
 
-            if(user.isPresent() && user.get().getUser_id().equals(userId)) {
-                userRepository.deleteById(userId);
-                return ResponseEntity.status(HttpStatus.OK).build();
-            }
-
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

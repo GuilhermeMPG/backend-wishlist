@@ -1,4 +1,4 @@
-package io.guimgp.backend_wishlist.project.domain.dto.wish_list;
+package io.guimgp.backend_wishlist.project.domain.dto.wish;
 
 import jakarta.validation.constraints.*;
 

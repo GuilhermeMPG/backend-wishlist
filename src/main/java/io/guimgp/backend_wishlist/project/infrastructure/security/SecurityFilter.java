@@ -3,12 +3,14 @@ package io.guimgp.backend_wishlist.project.infrastructure.security;
 import io.guimgp.backend_wishlist.project.domain.enums.UserRole;
 import io.guimgp.backend_wishlist.project.domain.model.entity.User;
 import io.guimgp.backend_wishlist.project.domain.model.repository.UserRepository;
+import io.guimgp.backend_wishlist.project.infrastructure.exceptions.EntityNotFoundCustomException;
 import io.guimgp.backend_wishlist.project.infrastructure.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,13 +35,13 @@ public class SecurityFilter extends OncePerRequestFilter {
         var login = tokenService.validateToken(token);
 
         if (login != null) {
-            User user = userRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("User Not Found"));
-//            String requestedUserId = request.getParameter("userId");
-//
-//            if (requestedUserId != null && !user.getUser_id().equals(UUID.fromString(requestedUserId)) && !user.getRole().equals(UserRole.ADMIN)) {
-//                response.setStatus(HttpServletResponse.SC_FORBIDDEN); // Retorna 403 Forbidden
-//                return;
-//            }
+            String requestedUserId = request.getParameter("userId");
+            User user = userRepository.findByEmail(login).orElseThrow(() ->  new EntityNotFoundCustomException(HttpStatus.NOT_FOUND, "Email not found!"));
+
+             if (requestedUserId != null && !user.getUser_id().equals(UUID.fromString(requestedUserId)) && !user.getRole().equals(UserRole.ADMIN)) {
+                response. setStatus(HttpServletResponse.SC_UNAUTHORIZED );
+                return;
+            }
 
             var authorities = user.getAuthorities();
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
