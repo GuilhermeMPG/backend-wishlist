@@ -17,8 +17,8 @@ public class ProfileController {
     @Autowired
     ProfileService profileService;
 
-    @PutMapping("{userId}/profile")
-    public ResponseEntity<Void> updateProfileById(@PathVariable("userId") String userId,
+    @PutMapping("/profile")
+    public ResponseEntity<Void> updateProfileById(@RequestParam("userId") String userId,
                                                @RequestBody PutProfileRequestDTO body) {
         return profileService.updateProfileById(userId, body);
     }
