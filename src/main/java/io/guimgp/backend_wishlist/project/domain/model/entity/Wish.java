@@ -16,19 +16,18 @@ import java.time.Instant;
 
 
 @Entity
-@Table(name = "wish_lists")
+@Table(name = "wishes")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WishList {
+public class Wish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @NotBlank(message = "User is required")
     private User user;
 
     @Column(nullable = false)
